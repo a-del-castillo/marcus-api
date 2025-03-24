@@ -12,7 +12,7 @@ class Api::V1::ConfigsController < ApplicationController
     if config.save
       render json: config, status: 200
     else
-      render json: {error: "Error creating configuration."}
+      render json: { error: "Error creating configuration." }
     end
   end
 
@@ -21,11 +21,11 @@ class Api::V1::ConfigsController < ApplicationController
     if config
       render json: config, status: 200
     else
-      render json: {error: "Configuration not found."}
+      render json: { error: "Configuration not found." }
     end
   end
 
-  private 
+  private
     def config_params
       params.require(:config).permit([
         :name,

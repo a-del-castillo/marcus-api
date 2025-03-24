@@ -15,7 +15,7 @@ class Api::V1::PartsController < ApplicationController
     )
     if part.save
       part_params[:incompatible_with].each do |incompatible_part|
-        Incompatibility.new(part_1: part.id, part_2:incompatible_part)
+        Incompatibility.new(part_1: part.id, part_2: incompatible_part)
       end
       render json: part, status: 200
     else
