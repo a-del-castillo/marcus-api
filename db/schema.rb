@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_23_165828) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_24_145012) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,13 +21,29 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_23_165828) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "incompatibilities", force: :cascade do |t|
+    t.string "part_1"
+    t.string "part_2"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "parts", force: :cascade do |t|
     t.string "name"
     t.string "category"
     t.decimal "price"
     t.binary "available"
-    t.integer "incompatible_with", default: [], array: true
     t.json "extra_props"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "user_id"
+    t.string "username"
+    t.string "password_digest"
+    t.string "about"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

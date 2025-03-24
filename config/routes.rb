@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
+  get '/auto-login' => "session#auto_login"
+  post '/session' => "session#login"
+  resources :users, only: :create
+  
   namespace :api do
     namespace :v1 do
-      resources :parts, only: [:index, :show, :create]
+      resources :parts, only: [:index, :show, :create] do
+        collection do
+          post 'available_parts' # Ruta POST para consultar las piezas disponibles
+        end
+      end
       resources :configs, only: [:index, :show, :create]
     end
   end

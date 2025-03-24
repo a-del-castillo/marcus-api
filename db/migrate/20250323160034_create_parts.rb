@@ -5,7 +5,6 @@ class CreateParts < ActiveRecord::Migration[8.0]
       t.string :category
       t.decimal :price
       t.binary :available
-      t.integer :incompatible_with, array: true, default: []
       t.json :extra_props
 
       t.timestamps

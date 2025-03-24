@@ -11,10 +11,12 @@ class Api::V1::PartsController < ApplicationController
       color: part_params[:color],
       price: part_params[:price],
       available: part_params[:available],
-      incompatible_with: part_params[:incompatible_with],
       extra_props: part_params[:extra_props]
     )
     if part.save
+      part_params[:incompatible_with].each do |incompatible_part|
+        Incompatibility.new(part_1: part.id, part_2:incompatible_part)
+      end
       render json: part, status: 200
     else
       render json: {error: "Error creating part."}
@@ -24,11 +26,30 @@ class Api::V1::PartsController < ApplicationController
   def show
     part = Part.find_by(id: params[:id])
     if part
-      render json: part, status: 200
+      incompatibilities = part.incompatibilities
+  
+      render json: {
+        part: part,
+        incompatibilities: incompatibilities
+      }, status: 200
     else
-      render json: {error: "Part not found."}
+      render json: { error: "Part not found." }, status: 404
     end
   end
+
+  def available_parts
+    part_ids = JSON.parse params[:ids]
+
+    incompatible_part_ids =Incompatibility.where(part_1: part_ids).pluck(:part_2) | Incompatibility.where(part_2: part_ids).pluck(:part_1)
+
+    available_parts = Part.where.not(id: incompatible_part_ids)
+    
+    if available_parts.any?
+      render json: available_parts, status: 200
+    else
+      render json: { error: "No parts available." }, status: 404
+    end
+  end  
 
   private 
     def part_params
