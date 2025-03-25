@@ -27,10 +27,12 @@ class Api::V1::PartsController < ApplicationController
     part = Part.find_by(id: params[:id])
     if part
       incompatibilities = part.incompatibilities
+      pricemodifiers = part.pricemodifiers
   
       render json: {
         part: part,
-        incompatibilities: incompatibilities
+        incompatibilities: incompatibilities,
+        pricemodifiers: pricemodifiers
       }, status: 200
     else
       render json: { error: "Part not found." }, status: 404
@@ -38,7 +40,7 @@ class Api::V1::PartsController < ApplicationController
   end
 
   def available_parts
-    part_ids = JSON.parse params[:ids]
+    part_ids = params[:ids]
 
     incompatible_part_ids =Incompatibility.where(part_1: part_ids).pluck(:part_2) | Incompatibility.where(part_2: part_ids).pluck(:part_1)
 
