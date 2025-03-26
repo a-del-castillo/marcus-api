@@ -1,4 +1,4 @@
-require 'securerandom'
+require "securerandom"
 
 class UsersController < ApplicationController
   def new
@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     if user.save
       render json: UserSerializer.new(user)
     else
-      render json: {status: "error", message: user.errors.full_messages[0]}
+      render json: { status: "error", message: user.errors.full_messages[0] }
     end
   end
 

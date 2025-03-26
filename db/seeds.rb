@@ -13,7 +13,6 @@ Part.create([
         category: "frame",
         price: "130",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -21,7 +20,6 @@ Part.create([
         category: "frame",
         price: "50",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -29,7 +27,6 @@ Part.create([
         category: "frame",
         price: "80",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -37,7 +34,6 @@ Part.create([
         category: "frame finish",
         price: "",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -45,7 +41,6 @@ Part.create([
         category: "frame finish",
         price: "",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -53,7 +48,6 @@ Part.create([
         category: "wheels",
         price: "80",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -61,7 +55,6 @@ Part.create([
         category: "wheels",
         price: "90",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -69,7 +62,6 @@ Part.create([
         category: "wheels",
         price: "120",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -78,7 +70,6 @@ Part.create([
         color: "10",
         price: "",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -86,7 +77,6 @@ Part.create([
         category: "rim color",
         price: "12",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -94,7 +84,6 @@ Part.create([
         category: "rim color",
         price: "13",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -102,7 +91,6 @@ Part.create([
         category: "chain",
         price: "43",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     },
     {
@@ -110,7 +98,6 @@ Part.create([
         category: "chain",
         price: "55",
         available: true,
-        incompatible_with: [],
         extra_props: {}
     }
 ])

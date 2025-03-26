@@ -6,7 +6,7 @@ class User < ApplicationRecord
     validates :username, uniqueness: true
 
     def get_token
-        id_object = {user_id: self.id}
+        id_object = { user_id: self.id }
         token = encode_token(id_object)
     end
 

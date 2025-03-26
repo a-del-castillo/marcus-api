@@ -5,5 +5,4 @@ class UserSerializer
     attribute :token do |object|
         "#{object.get_token}"
     end
-  end
-  
+end
