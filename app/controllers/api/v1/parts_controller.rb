@@ -19,7 +19,7 @@ class Api::V1::PartsController < ApplicationController
       end
       render json: part, status: 200
     else
-      render json: {error: "Error creating part."}
+      render json: { error: "Error creating part." }
     end
   end
 
@@ -28,7 +28,7 @@ class Api::V1::PartsController < ApplicationController
     if part
       incompatibilities = part.incompatibilities
       pricemodifiers = part.pricemodifiers
-  
+
       render json: {
         part: part,
         incompatibilities: incompatibilities,
@@ -45,15 +45,15 @@ class Api::V1::PartsController < ApplicationController
     incompatible_part_ids =Incompatibility.where(part_1: part_ids).pluck(:part_2) | Incompatibility.where(part_2: part_ids).pluck(:part_1)
 
     available_parts = Part.where.not(id: incompatible_part_ids)
-    
+
     if available_parts.any?
       render json: available_parts, status: 200
     else
       render json: { error: "No parts available." }, status: 404
     end
-  end  
+  end
 
-  private 
+  private
     def part_params
       params.require(:part).permit([
         :name,
