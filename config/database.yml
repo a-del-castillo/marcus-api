@@ -79,11 +79,13 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
+  url: <%= ENV["DATABASE_URL"] %>
   primary: &primary_production
     <<: *default
     database: marcus_od0v
     username: <%= ENV["MARCUS_API_DATABASE_USER"] %>
     password: <%= ENV["MARCUS_API_DATABASE_PASSWORD"] %>
+    host: <%= ENV["MARCUS_API_DATABASE_HOST"] %>
   cache:
     <<: *primary_production
     database: marcus_api_production_cache
