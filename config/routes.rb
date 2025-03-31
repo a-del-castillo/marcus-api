@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
     get "/auto-login" => "session#auto_login"
     post "/session" => "session#login"
-    resources :users, only: :create
+#    resources :users, only: :create
 
     namespace :api do
         namespace :v1 do
@@ -15,6 +15,12 @@ Rails.application.routes.draw do
                     post "config_price_req"
                 end
             end
+            resources :orders, only: [ :index, :show, :update, :create ] do
+                collection do
+                    get "show_current"
+                end
+            end
+            resources :users, only: :create
         end
     end
     # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
