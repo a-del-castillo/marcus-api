@@ -9,7 +9,8 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
         origins "http://localhost:5173",
             "http://127.0.0.1:5173",
-            "http://yourwebsite.production.app",
+            "https://marcus-api.onrender.com",
+            "https://marcus-ui.onrender.com",
             /\Ahttps:\/\/deploy-preview-\d{1,4}--yourwebsite\.domain\.app\z/
 
         resource "*",
