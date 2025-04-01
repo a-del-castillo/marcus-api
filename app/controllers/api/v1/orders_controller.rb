@@ -52,42 +52,51 @@ class Api::V1::OrdersController < ApplicationController
     end
 
     def update
-        update_params = params.require(:order).permit(:status, parts_attributes: [:id, :name, :category, :price, :available, :quantity], configs_attributes: [:id, :name, :price, :user_id, parts: []])
+        update_params = params.require(:order).permit(:id, :status, parts_attributes: [:id, :name, :category, :price, :available, :quantity], configs_attributes: [:id, :name, :price, :user_id, parts: []])
 
-        @order = Order.find_by(user: current_user.id, status: 'in cart')
-        if @order.update(update_params)
-            #TODO delete configs from db
-            OrderArticle.where(order_id: @order.id).delete_all
-            order_price = 0
-            if params[:order][:parts_ids].present?
-                params[:order][:parts_ids].each do |part_id|
-                    OrderArticle.create(order_id: @order.id, part_id: part_id)
-                    order_price += Part.find(part_id).price
-                end
-                
+        if current_user.role == 'admin'
+            @order = Order.find_by(id: params[:id])
+            if @order.update(update_params)
+                render json: @order, status: :ok
+            else
+                render json: @order.errors, status: :unprocessable_entity
             end
-
-            if params[:order][:configs].present?
-                params[:order][:configs].each do |config|
-                    config_price = calculate_config_price(config[:parts])
-                    new_config = Config.new(
-                        name: config[:name],
-                        parts: config[:parts],
-                        user: current_user[:id],
-                        price: config_price.to_f.round(2)
-                    )
-                    new_config.save
-                    order_price += config_price
-                    OrderArticle.create(order_id: @order.id, config_id: new_config[:id])
-                end
-            end
-    
-            @order.price = order_price
-            @order.save
-
-            render json: @order, status: :ok
         else
-            render json: @order.errors, status: :unprocessable_entity
+            @order = Order.find_by(user: current_user.id, status: 'in cart')
+            if @order.update(update_params)
+                #TODO delete configs from db
+                OrderArticle.where(order_id: @order.id).delete_all
+                order_price = 0
+                if params[:order][:parts_ids].present?
+                    params[:order][:parts_ids].each do |part_id|
+                        OrderArticle.create(order_id: @order.id, part_id: part_id)
+                        order_price += Part.find(part_id).price
+                    end
+                    
+                end
+
+                if params[:order][:configs].present?
+                    params[:order][:configs].each do |config|
+                        config_price = calculate_config_price(config[:parts])
+                        new_config = Config.new(
+                            name: config[:name],
+                            parts: config[:parts],
+                            user: current_user[:id],
+                            price: config_price.to_f.round(2)
+                        )
+                        new_config.save
+                        order_price += config_price
+                        OrderArticle.create(order_id: @order.id, config_id: new_config[:id])
+                    end
+                end
+        
+                @order.price = order_price
+                @order.save
+
+                render json: @order, status: :ok
+            else
+                render json: @order.errors, status: :unprocessable_entity
+            end
         end
     
     end
