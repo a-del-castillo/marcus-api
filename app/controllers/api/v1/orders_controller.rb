@@ -4,8 +4,12 @@ class Api::V1::OrdersController < ApplicationController
     before_action :authenticate_user, only: [:create, :index]
 
     def index
-        orders = Order.all
-        render json: orders, status: 200
+        if current_user.role == 'admin'
+            orders = Order.all
+            render json: orders, status: 200
+        else
+            render json: { error: "You don't have permission to view all orders." }, status: :forbidden
+        end
     end
 
     def create
