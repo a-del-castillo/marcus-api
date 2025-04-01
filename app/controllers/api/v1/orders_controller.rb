@@ -1,6 +1,7 @@
 require './app/helpers/pricing_helper'
 class Api::V1::OrdersController < ApplicationController
     include PricingHelper
+    before_action :authenticate_user, only: [:create, :index]
 
     def index
         orders = Order.all
@@ -102,7 +103,7 @@ class Api::V1::OrdersController < ApplicationController
         if order
             render json: order, status: 200
         else
-            render json: { error: "Order not found." }
+            render json: { error: "Order not found." }, status: 404
         end
     end
 
@@ -122,6 +123,8 @@ class Api::V1::OrdersController < ApplicationController
     end
 
     def current_user
+        return nil unless request.headers['Authorization'].present?
+
         token = request.headers["Authorization"].split(" ")[1]
         decoded_hash = (JWT.decode(token, secret_key, true, algorithm: "HS256"))
         if !decoded_hash.empty?
@@ -129,5 +132,12 @@ class Api::V1::OrdersController < ApplicationController
             return user
         end
         return false
+    end
+
+    def authenticate_user
+        unless current_user
+            render json: { error: "You need to be logged in to perform this action." }, status: :unauthorized
+            return
+        end
     end
 end

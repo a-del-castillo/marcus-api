@@ -11,7 +11,6 @@ class Api::V1::PartsController < ApplicationController
             part = Part.new(
                 name: part_params[:name],
                 category: part_params[:category],
-                #color: part_params[:color],
                 price: part_params[:price],
                 available: part_params[:available],
                 extra_props: part_params[:extra_props]
@@ -132,7 +131,7 @@ class Api::V1::PartsController < ApplicationController
 
     def part_params
         params.require(:part).permit(
-            :id,  # Permitir id si deseas usarlo (en el caso de que estés actualizando un registro existente)
+            :id,
             :name,
             :category,
             :color,
