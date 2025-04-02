@@ -114,16 +114,16 @@ Some parts are incompatible with others and can't be used in the same custom con
 
 System uses JWT tokens for user autentication.
 
-Some endpoints are protected and are accesible only for autenticated users.
+Some endpoints are protected and are accesible only for authenticated users.
 
 Some endpoints have aditional restrictions based on user role (ie: only admins can see all the orders).
 
 
 ### Shopping cart:
 
-Each autenticated user have their order with 'in Cart' status stored in the server that gets updated when parts and/or custom configurations are added or removed.
+Each authenticated user have their order with 'in Cart' status stored in the server that gets updated when parts and/or custom configurations are added or removed.
 
-Non autenticated users carts are not stored at all besides current vars tied to UI execution.
+Non authenticated users carts are not stored at all besides current vars tied to UI execution.
 Usuars can add, remove or modify articles from their shopping carts.
 
 ### Possible improvements (changes I wanted to add but had to leave in the TO-DO list due to time constrains):
